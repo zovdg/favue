@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+
+  backend:
+    build: ./services/backend
+    ports:
+      - 15000:15000
+    environment:
+      - DATABASE_URL=postgres://favue:favue@db:5432/favue
+      - SECRET_KEY=09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7
+    volumes:
+      - ./services/backend:/app
+    command: uvicorn src.main:app --reload --host 0.0.0.0 --port 15000
+
+  frontend:
+    build: ./services/frontend
+    volumes:
+      - './services/frontend:/app'
+      - '/app/node_modules'
+    ports:
+      - 8080:8080
+
+  db:
+    image: postgres:15.1
+    expose:
+      - 5432
+    environment:
+      - POSTGRES_USER=favue
+      - POSTGRES_PASSWORD=favue
+      - POSTGRES_DB_favue
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+volumes:
+  postgres_data:

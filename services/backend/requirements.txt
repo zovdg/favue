@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+
+aerich
+asyncpg
+tortoise
+
+passlib
+python-jose
+bcrypt
+
+python-multipart  # OAuth2PasswordRequestForm requires.
